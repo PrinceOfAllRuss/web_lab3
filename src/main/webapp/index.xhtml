@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Start page</title>
+        <h:outputStylesheet name="style.css" library="css" />
+    </h:head>
+    <h:body>
+        <br/>
+        <table>
+            <tr>
+                <th id="start_head">
+                    <ui:include src="templates/templateHead.xhtml" />
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <h:form>
+                        <h1 id="clock_header">
+                            <h:outputText id="clock" value="#{clock.time}"/>
+                        </h1>
+                        <p:poll interval="9" listener="#{clock.updateTime}" update="clock"/>
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+</html>

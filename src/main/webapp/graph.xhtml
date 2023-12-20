@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/templatePage.xhtml">
+        <ui:define name="header">
+            <h:link outcome="index" style="text-decoration: none;">
+                Стартовая страница
+            </h:link>
+        </ui:define>
+        <ui:define name="graph">
+            <canvas id="graph" width="500" height="500"></canvas>
+            <div id="btnsForGraph">
+                <button type="button" id="removeDotOnGraph" class="btnForDotOnGraph hidden" value="false">
+                    Убрать точку
+                </button>
+            </div>
+        </ui:define>
+
+        <ui:define name="form">
+            <h:form id="form">
+                <h:inputHidden id="dot_on_graph_x" value="#{dotongraph.coordX}"/>
+                <h:inputHidden id="dot_on_graph_y" value="#{dotongraph.coordY}"/>
+                <div>
+                    <h:outputLabel>Select X: </h:outputLabel>
+                    <h:selectBooleanCheckbox value='#{xbean.value1}' class="checkboxes">
+                        <h:outputLabel>-5</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value2}' class="checkboxes">
+                        <h:outputLabel>-4</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value3}' class="checkboxes">
+                        <h:outputLabel>-3</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value4}' class="checkboxes">
+                        <h:outputLabel>-2</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value5}' class="checkboxes">
+                        <h:outputLabel>-1</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value6}' class="checkboxes">
+                        <h:outputLabel>0</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                    <h:selectBooleanCheckbox value='#{xbean.value7}' class="checkboxes">
+                        <h:outputLabel>1</h:outputLabel>
+                    </h:selectBooleanCheckbox>
+                </div>
+                <br/>
+                <div id="errorX" class="error"></div>
+                <br/>
+                <div>
+                    <h:outputLabel>Select Y (from -5 to 3): </h:outputLabel>
+                    <h:inputText id="y" value="1" />
+                    <h:inputHidden id="y_hidden" value="#{ybean.valueStr}" />
+                </div>
+                <br/>
+                <div id="errorY" class="error"></div>
+                <br/>
+                <div>
+                    <h:outputLabel>Select R (from 1 to 4): </h:outputLabel>
+                    <h:outputText id="output" value=" #{rbean.value}"/>
+                    <h:inputHidden id="r" value="#{rbean.value}"/>
+                </div>
+                <br/>
+                <div id="div_radius">
+                    <p:slider for="r" 
+                              minValue="1" 
+                              maxValue="4" 
+                              display="output" 
+                              displayTemplate=" {value}" 
+                              style="width: 200px; height: 10px" 
+                              step="0.5" 
+                              onSlideEnd="graph.drawGraph('slider')"/>
+                </div>
+                <br/>
+                <div>
+                    <p:commandButton id="submit" 
+                                     class="submit"
+                                     value="Проверить"
+                                     action="#{resultbean.addResult(xbean.array, 
+                                               ybean.valueStr, rbean.value, 
+                                               dotongraph.coordX, dotongraph.coordY)}"
+                                     update="result">
+                    </p:commandButton>
+                </div>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="results">
+            <div class="result-table">
+                <p:dataTable id="result" var="element" value="#{resultbean.elements}">
+                    <p:column headerText="x">
+                        <h:outputText value="#{element.x}" />
+                    </p:column>
+
+                    <p:column headerText="y">
+                        <h:outputText value="#{element.y}" />
+                    </p:column>
+
+                    <p:column headerText="r">
+                        <h:outputText value="#{element.r}" />
+                    </p:column>
+
+                    <p:column headerText="Попадание">
+                        <h:outputText value="#{element.condition}" />
+                    </p:column>
+
+                    <p:column headerText="Время выполнения (в нано секундах)">
+                        <h:outputText value="#{element.timeOfWork}" />
+                    </p:column>
+
+                    <p:column headerText="Время">
+                        <h:outputText value="#{element.time}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+
+        <ui:define name="js">
+            <h:outputScript name="js/Renderer.js"/>
+            <h:outputScript name="js/ClientData.js"/>
+            <h:outputScript name="js/EventAdder.js"/>
+            <h:outputScript name="js/Main.js"/>
+            <h:outputScript name="js/Graph.js"/>
+            <h:outputScript name="js/Dot.js"/>
+        </ui:define>
+    </ui:composition>
+</html>

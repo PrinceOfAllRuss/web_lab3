@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Lab 3</title>
+        <h:outputStylesheet name="style.css" library="css" />
+    </h:head>
+
+    <h:body>
+        <table>
+            <tr>
+                <th colspan="2" id="table_head">
+                    <ui:insert name="header">
+                        Заголовок
+                    </ui:insert>
+                </th>
+            </tr>
+            <tr>
+                <td width="40%">
+                    <ui:insert name="graph">
+                        Graph
+                    </ui:insert>
+                </td>
+                <td width="60%">
+                    <ui:insert name="form">
+                        Form
+                    </ui:insert>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <ui:insert name="results">
+            Result
+        </ui:insert>
+        <ui:insert name="js"/>
+    </h:body>
+</html>

@@ -1,0 +1,117 @@
+body {
+    background-color: #E0FFFF;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+table {
+    width: 100%;
+    border: 0px;
+    border-spacing: 2% 2%;
+}
+td {
+    padding: 5%;
+    vertical-align: middle;
+    text-align: center;
+}
+#table_head {
+    font-family: monospace;
+    font-size: 40px;
+    color: #00008B;
+    height: 70px;
+}
+input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-left: 1%;
+    margin-right: 1%;
+}
+#submit {
+    font-size: 20px;
+    background-color: #1E90FF;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 150px;
+    height: 50px;
+}
+canvas {
+    border: 2px solid #000000;
+    border-radius: 30px;
+}
+input[type="text"] {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+    border-radius: 10px;
+    text-align: center;
+    outline: 2px solid #1E90FF;
+    border: none;
+    width: 200px;
+    height: 20px;
+}
+.error {
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 17px;
+}
+#result {
+    font-size: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+#table_result th {
+    background-color: #1E90FF;
+    height: 100px;
+}
+#div_radius {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    top: 100px;
+}
+#div_with_results {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#start_head {
+    font-size: 30px;
+}
+#clock_header {
+    font-size: 50px;
+}
+.submit {
+    font-size: 20px;
+    background-color: #1E90FF;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-family: Georgia, Times New Roman, Times, serif;
+    width: 150px;
+    height: 50px;
+}
+.btnForDotOnGraph {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #1E90FF;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: 200px;
+    height: 35px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 3%;
+    transition: all 0.3s;
+}
+#btnsForGraph {
+    display: flex;
+    /*align-items: center;*/
+    width: 500px;
+    /*justify-content: center;*/
+}
+.hidden {
+   opacity: 0;
+}
