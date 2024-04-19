@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="lab3" default="compile">
+
+    <property file="build.properties"/>
+
+    <!-- 1 -->
+    <target name="compile" description="Компиляция проекта">
+        <echo>Compilation...</echo>
+        <exec executable="mvn.cmd" dir="${root}" failonerror="true">
+            <arg line="compile"/>
+        </exec>
+        <echo>Compilation success</echo>
+    </target>
+
+    <!-- 2 -->
+    <target name="build" depends="compile" description="Компиляция проекта и упаковка в исполняемый WAR файл">
+        <echo>Building...</echo>
+        <exec executable="mvn.cmd" dir="${root}" failonerror="true">
+            <arg line="package"/>
+        </exec>
+        <echo>Build success</echo>
+    </target>
+
+    <!-- 3 -->
+    <target name="clean" description="Удаление скомпилированных классов проекта и всех временных файлов">
+        <echo>Cleaning...</echo>
+        <delete dir="${classes}"/>
+        <echo>Cleaning done</echo>
+    </target>
+
+    <!-- 4 -->
+    <target name="test" depends="build" description="Запуск junit-тестов проекта">
+        <echo>Tests starts...</echo>
+        <exec executable="mvn.cmd" dir="${root}" failonerror="true">
+            <arg line="test"/>
+        </exec>
+        <echo>Tests done</echo>
+    </target>
+
+    <!-- 5 -->
+<!--    <target name="scp" depends="build" description="перемещение собранного проекта по scp на выбранный сервер по завершению сборки">-->
+<!--        <echo>Sending..</echo>-->
+<!--        <scp file="${war}"-->
+<!--             todir="s368475@se.ifmo.ru:~/"-->
+<!--             password="DiOz>4013" trust="true" port="2222"/>-->
+<!--        <echo>Sending success!</echo>-->
+<!--    </target>-->
+
+    <!-- 6 -->
+    <target name="xml" description="Валидация xml-файлов проекта">
+        <echo>Validation is started</echo>
+        <xmlvalidate lenient="yes">
+            <fileset includes="*/*.xml" dir="${root}" />
+        </xmlvalidate>
+        <echo>Validation is finished</echo>
+    </target>
+
+    <!-- 7 -->
+    <target name="music" depends="build" description="Воспроизведение музыки по завершению сборки">
+        <taskdef name="sound" classname="org.apache.tools.ant.taskdefs.optional.sound.SoundTask"/>
+        <sound>
+            <success source="${sound}" />
+        </sound>
+    </target>
+</project>
