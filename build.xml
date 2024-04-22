@@ -103,36 +103,19 @@
 
     <!-- 15 -->
     <target name="team">
-        <exec
-                dir="${repo}"
-                executable="git"
-                outputproperty="revision.current"
-                failonerror="false"
-        >
+        <exec dir="${repo}" executable="git" outputproperty="revision.current" failonerror="false">
             <arg line="info --show-item revision" />
         </exec>
 
-        <exec
-                dir="${root}"
-                outputproperty="revision.target2"
-                executable="sh"
-        >
+        <exec dir="${root}" outputproperty="revision.target2" executable="sh">
             <arg line="sub.sh ${revision.current} 2" />
         </exec>
 
-        <exec
-                dir="${root}"
-                outputproperty="revision.target1"
-                executable="sh"
-        >
+        <exec dir="${root}" outputproperty="revision.target1" executable="sh">
             <arg line="sub.sh ${revision.current} 1" />
         </exec>
 
-
-        <exec
-                dir="${repo}"
-                executable="svn"
-        >
+        <exec dir="${repo}" executable="svn">
             <arg line="update -r ${revision.target1}" />
         </exec>
 
