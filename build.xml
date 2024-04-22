@@ -133,11 +133,7 @@
 
         <mkdir dir="${target}/team"/>
 
-        <move
-                file="${war}"
-                tofile="${target}/team/revision-2.war"
-        />
-
+        <move file="${war}" tofile="${target}/team/revision-2.war"/>
 
         <zip destfile="${target}/team.zip" basedir="${target}/team" />
     </target>
