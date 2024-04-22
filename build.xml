@@ -121,27 +121,17 @@
 
         <antcall target="build" />
 
-        <mkdir
-                dir="${target}/team"
-        />
+        <mkdir dir="${target}/team"/>
 
-        <move
-                file="${war}"
-                tofile="${target}/team/revision-1.war"
-        />
+        <move file="${war}" tofile="${target}/team/revision-1.war"/>
 
-        <exec
-                dir="${repo}"
-                executable="git"
-        >
+        <exec dir="${repo}" executable="git">
             <arg line="update -r ${revision.target2}" />
         </exec>
 
         <antcall target="build" />
 
-        <mkdir
-                dir="${target}/team"
-        />
+        <mkdir dir="${target}/team"/>
 
         <move
                 file="${war}"
