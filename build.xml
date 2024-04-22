@@ -63,4 +63,136 @@
             <success source="${sound}" />
         </sound>
     </target>
+
+    <!-- 8 -->
+    <target name="doc">
+        <javadoc sourcepath="${src}" destdir="javadoc">
+            <classpath>
+                <fileset dir="${lib}" includes="*.jar" />
+            </classpath>
+        </javadoc>
+        <checksum file="${war}" property="${md5_sum}" algorithm="MD5" />
+        <checksum file="${war}" property="${sha1_sum}" algorithm="SHA1" />
+        <manifestclasspath property="manifest.classpath" jarfile="build/jar/my-app.jar">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${classes}">
+                    <include name="**/*.class"/>
+                </fileset>
+            </classpath>
+        </manifestclasspath>
+        <manifest file="src/main/MANIFEST.MF">
+            <attribute name="Main-Class" value="NoClass"/>
+            <attribute name="Class-Path" value="${manifest.classpath}"/>
+            <attribute name="MD5-Digest" value="${md5.checksum}"/>
+            <attribute name="SHA1-Digest" value="${sha1.checksum}"/>
+        </manifest>
+    </target>
+
+    <!-- 9 -->
+    <target name="native2ascii" description="Native2ascii">
+        <echo>Native to ascii starting..</echo>
+        <delete dir="${native2ascii}"/>
+        <native2ascii src="${resources}"
+                      dest="${native2ascii}"
+                      includes="**/*.properties"/>
+        <echo>Native to ascii done!</echo>
+    </target>
+
+    <!-- 15 -->
+    <target name="team">
+        <exec
+                dir="${repo}"
+                executable="git"
+                outputproperty="revision.current"
+                failonerror="false"
+        >
+            <arg line="info --show-item revision" />
+        </exec>
+
+        <exec
+                dir="${root}"
+                outputproperty="revision.target2"
+                executable="sh"
+        >
+            <arg line="sub.sh ${revision.current} 2" />
+        </exec>
+
+        <exec
+                dir="${root}"
+                outputproperty="revision.target1"
+                executable="sh"
+        >
+            <arg line="sub.sh ${revision.current} 1" />
+        </exec>
+
+
+        <exec
+                dir="${repo}"
+                executable="svn"
+        >
+            <arg line="update -r ${revision.target1}" />
+        </exec>
+
+        <antcall target="build" />
+
+        <mkdir
+                dir="${target}/team"
+        />
+
+        <move
+                file="${war}"
+                tofile="${target}/team/revision-1.war"
+        />
+
+        <exec
+                dir="${repo}"
+                executable="git"
+        >
+            <arg line="update -r ${revision.target2}" />
+        </exec>
+
+        <antcall target="build" />
+
+        <mkdir
+                dir="${target}/team"
+        />
+
+        <move
+                file="${war}"
+                tofile="${target}/team/revision-2.war"
+        />
+
+
+        <zip destfile="${target}/team.zip" basedir="${target}/team" />
+    </target>
+
+    <!-- 13 -->
+    <target name="report">
+        <echo>Tests running (with report)..</echo>
+        <exec executable="mvn.cmd" dir="${root}" failonerror="true">
+            <arg line="surefire-report:report"/>
+        </exec>
+        <copy file="./target/surefire-reports/TEST-TestTest.xml" todir="./../working-copy"/>
+        <sequential>
+            <echo>Start commiting</echo>
+            <exec executable="svn" dir="${svn_directory}">
+                <arg line="add . --force" />
+            </exec>
+            <exec executable="svn" dir="${svn_directory}">
+                <arg line="commit -m 'tests' --force-log" />
+            </exec>
+            <echo>End commiting</echo>
+        </sequential>
+        <echo>Tests done</echo>
+    </target>
+
+<!--    <target name="copy_test">-->
+<!--        <copy file="./target/surefire-reports/TEST-TestTest.xml" todir="./../test_copy"/>-->
+<!--&lt;!&ndash;        <copy todir="D:/2_year/2_half/Opi/lab3/test_copy" >&ndash;&gt;-->
+<!--&lt;!&ndash;            <fileset dir="./target/surefire-reports/*.xml"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </copy>&ndash;&gt;-->
+<!--    </target>-->
 </project>
